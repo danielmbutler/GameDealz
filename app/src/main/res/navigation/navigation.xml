@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/Menu_Item_GameFragment">
+
+    <fragment
+        android:id="@+id/Menu_Item_GameFragment"
+        android:name="com.dbtechprojects.gamedeals.ui.fragments.GameFragment"
+        android:label="Games"
+        tools:layout="@layout/fragment_game" />
+
+    <fragment
+        android:id="@+id/Menu_Item_StoreFragment"
+        android:name="com.dbtechprojects.gamedeals.ui.fragments.StoreFragment"
+        android:label="Stores"
+        tools:layout="@layout/fragment_store" />
+
+    <fragment
+        android:id="@+id/Menu_Item_SavedDealsFragment"
+        android:name="com.dbtechprojects.gamedeals.ui.fragments.SavedDealsFragment"
+        android:label="Saved Deals"
+        tools:layout="@layout/fragment_saved_deals" />
+
+
+</navigation>

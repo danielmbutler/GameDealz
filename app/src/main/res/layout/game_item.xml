@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/textlines">
+
+    <ImageView
+        android:id="@+id/SavedRowGameThumbnail"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:background="@null"
+        android:contentDescription="@string/image"
+        app:layout_constraintBottom_toBottomOf="@+id/SavedRow_GameTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/SavedRow_GameTitle"
+        app:layout_constraintVertical_bias="0.27"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <ImageView
+        android:id="@+id/SavedRow_Game_Delete"
+        android:layout_width="29dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="32dp"
+        android:background="@null"
+        android:contentDescription="@string/image"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/SavedRow_GameTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/SavedRow_GameTitle"
+        app:layout_constraintVertical_bias="0.111"
+        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+    <TextView
+        android:id="@+id/SavedRow_GameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@null"
+        android:text="@string/latest_message"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/SavedRow_GameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/SavedRow_GameTitle" />
+
+    <TextView
+        android:id="@+id/SavedRow_GameTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@null"
+        android:ellipsize="none"
+        android:fontFamily="@font/gaming_font"
+        android:singleLine="false"
+        android:textColor="@color/AppWhite"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/SavedRow_Game_Delete"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/SavedRowGameThumbnail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="username" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

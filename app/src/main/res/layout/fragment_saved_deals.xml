@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Fragment_SavedDeals"
+    tools:context=".ui.fragments.SavedDealsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/SavedGamesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="?attr/actionBarSize">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/SavedGamesPlaceHolderImage"
+            android:layout_width="258dp"
+            android:layout_height="196dp"
+            android:src="@drawable/ic_baseline_save_placeholder"
+            app:layout_constraintBottom_toBottomOf="@+id/SavedGamesRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/SavedGamesRecyclerView"
+            app:layout_constraintVertical_bias="0.211" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your saved games will appear here."
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/SavedGamesPlaceHolderImage"
+            app:layout_constraintStart_toStartOf="@+id/SavedGamesPlaceHolderImage"
+            app:layout_constraintTop_toBottomOf="@+id/SavedGamesPlaceHolderImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/AppMetalicBlack"
+    android:id="@+id/GameFragmentLayout"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        />
+
+    <EditText
+        android:id="@+id/GameFragmentSearchBar"
+        android:layout_width="240dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto"
+        android:hint="@string/search"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:maxLength="50"
+        android:textColor="@color/AppWhite"
+        android:textColorHint="@color/AppWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/GamesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/GameFragmentSearchBar" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/GameFragmentPlaceholderImage"
+        android:layout_width="143dp"
+        android:layout_height="150dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/GamesRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/GamesRecyclerView"
+        app:srcCompat="@drawable/ic_baseline_search_placeholder" />
+
+    <TextView
+        android:id="@+id/GameFragmentPlaceholderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/search_for_games_using_the_bar_above"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/GameFragmentPlaceholderImage"
+        app:layout_constraintStart_toStartOf="@+id/GameFragmentPlaceholderImage"
+        app:layout_constraintTop_toBottomOf="@+id/GameFragmentPlaceholderImage" />
+
+    <Button
+        android:id="@+id/GameFragementSearchButton"
+        android:layout_width="131dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/gaming_font"
+        android:text="@string/searchbtn"
+        android:textAlignment="viewStart"
+        android:textColor="@color/AppWhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_baseline_search_24"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/GameFragmentSearchBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/GameFragmentSearchBar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/GameFragmentProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/GameFragmentPlaceholderImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

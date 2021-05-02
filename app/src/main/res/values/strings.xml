@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">IGameDealz</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="exit">Exit</string>
+    <string name="get_deal">Get Deal</string>
+    <string name="save_deal">Save Deal</string>
+    <string name="textview">TextView</string>
+    <string name="image">image</string>
+    <string name="search">Search...</string>
+    <string name="searchbtn">Search</string>
+    <string name="latest_message">Latest Message</string>
+    <string name="search_for_games_using_the_bar_above">Search for games using the bar above.</string>
+</resources>
