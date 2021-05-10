@@ -1,24 +1,19 @@
 package com.dbtechprojects.gamedeals.ui.adapters
 
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dbtechprojects.gamedeals.R
 import com.dbtechprojects.gamedeals.models.Game
 import com.dbtechprojects.gamedeals.ui.activities.GameDealActivity
-import com.dbtechprojects.gamedeals.ui.fragments.SavedDealsFragment
 import com.dbtechprojects.gamedeals.util.ImageUtils
 
-class SavedGamesListAdapter
-    (
-    private val fragment: SavedDealsFragment
-) : RecyclerView.Adapter<SavedGamesViewHolder>() {
+class SavedGamesListAdapter : RecyclerView.Adapter<SavedGamesViewHolder>() {
 
     private var gamelist = mutableListOf<Game>()
 
@@ -30,12 +25,17 @@ class SavedGamesListAdapter
         gamelist.removeAt(pos)
     }
 
+    private var onClickListener: OnClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedGamesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return SavedGamesViewHolder(inflater, parent)
+
+
     }
 
     override fun onBindViewHolder(holder: SavedGamesViewHolder, position: Int) {
+
 
         val itemView = holder.itemView
         val TitleText = itemView.findViewById<TextView>(R.id.SavedRow_GameTitle)
@@ -61,7 +61,9 @@ class SavedGamesListAdapter
         val deletebtn = itemView.findViewById<ImageView>(R.id.SavedRow_Game_Delete)
 
         deletebtn.setOnClickListener {
-            fragment.deletegame(game, position)
+            if (onClickListener != null) {
+                onClickListener!!.onClick(position, game, holder.itemView)
+            }
         }
 
         //glide image
@@ -72,6 +74,14 @@ class SavedGamesListAdapter
 
 
     override fun getItemCount(): Int = gamelist.size
+
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: Game, view: View)
+    }
 
 
 }

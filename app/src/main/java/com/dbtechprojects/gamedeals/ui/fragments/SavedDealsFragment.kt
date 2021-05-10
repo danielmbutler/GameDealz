@@ -36,7 +36,13 @@ class SavedDealsFragment : BaseFragment() {
         binding = FragmentSavedDealsBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        savedDealsAdapter = SavedGamesListAdapter(this)
+        savedDealsAdapter = SavedGamesListAdapter()
+        savedDealsAdapter.setOnClickListener(onClickListener = object : SavedGamesListAdapter.OnClickListener{
+            override fun onClick(position: Int, model: Game, view: View) {
+                deleteGame(game = model, pos = position)
+            }
+
+        })
 
 
         viewModel.savedGames.observe(viewLifecycleOwner, Observer { games ->
@@ -79,7 +85,7 @@ class SavedDealsFragment : BaseFragment() {
 
 
 
-    fun deletegame(game:Game, pos: Int){
+    private fun deleteGame(game:Game, pos: Int){
 
         val builder = AlertDialog.Builder(requireContext(),R.style.MyDialogTheme)
         builder.setMessage("Are you sure ?")
