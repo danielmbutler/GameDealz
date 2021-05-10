@@ -19,6 +19,8 @@ IGameDealz searches 10 different online stores such as Steam and Uplay to find y
 
 ## ScreenShots
 
-![alt text](https://github.com/danielmbutler/GameDealz/blob/master/assets/featuregraphic.PNG)
+![alt text](https://github.com/danielmbutler/GameDealz/blob/master/assets/featuregraphic.png)
 ![alt text](https://github.com/danielmbutler/GameDealz/blob/master/assets/youtubevideo.gif)
+
+
 
