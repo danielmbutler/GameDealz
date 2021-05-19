@@ -43,11 +43,11 @@ class SettingsActivity : BaseActivity() {
 
         confirmbtn.setOnClickListener {
 
-            if (clearSavedGamesCBX.isChecked == false && clearSearchCacheCBX.isChecked == false) {
+            if (!clearSavedGamesCBX.isChecked && !clearSearchCacheCBX.isChecked) {
                 var message = "please check a tickbox"
                 val view = findViewById<ViewGroup>(R.id.constraintlayout)
                 val customLayout = layoutInflater.inflate(R.layout.custom_toast, view)
-                customLayout.findViewById<TextView>(R.id.toasttext).setText(message)
+                customLayout.findViewById<TextView>(R.id.toasttext).text = message
                 showToast(this, customLayout)
             } else {
                 // alert builder
@@ -76,7 +76,7 @@ class SettingsActivity : BaseActivity() {
                         }
                         val view = findViewById<ViewGroup>(R.id.constraintlayout)
                         val customLayout = layoutInflater.inflate(R.layout.custom_toast, view)
-                        customLayout.findViewById<TextView>(R.id.toasttext).setText("Items Cleared")
+                        customLayout.findViewById<TextView>(R.id.toasttext).text = "Items Cleared"
                         showToast(this, customLayout)
 
                     }

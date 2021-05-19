@@ -7,7 +7,7 @@ IGameDealz searches 10 different online stores such as Steam and Uplay to find y
 * Retrofit 
 * Fragments 
 * ViewModels 
-* RecyclerView 
+* RecyclerView - DiffUtil
 * Local Caching with Room Database
 * Dagger Hilt
 * Glide

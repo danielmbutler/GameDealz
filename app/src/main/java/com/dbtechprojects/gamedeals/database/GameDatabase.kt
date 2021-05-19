@@ -9,7 +9,7 @@ import com.dbtechprojects.gamedeals.models.GameStore
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(entities = arrayOf(Game::class, GameStore::class), version = 4, exportSchema = false)
-public abstract class GameDatabase : RoomDatabase() {
+abstract class GameDatabase : RoomDatabase() {
 
     abstract fun gameDao(): GameDAO
 

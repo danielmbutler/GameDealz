@@ -40,9 +40,9 @@ class GameDealActivity : BaseActivity() {
         val priceTv = findViewById<TextView>(R.id.GameDealPriceTV)
         tv.movementMethod = ScrollingMovementMethod()
 
-        tv.setText(game?.external.toString())
+        tv.text = game?.external.toString()
 
-        priceTv.setText("$${game?.cheapest}")
+        priceTv.text = "$${game?.cheapest}"
 
         ImageUtils.loadImage(this, ImageView, game!!.thumb!!)
 
@@ -62,12 +62,12 @@ class GameDealActivity : BaseActivity() {
 
 
             if(mSavedGames.size >= 30 ){
-                customLayout.findViewById<TextView>(R.id.toasttext).setText("Error - Unable to save game deal you have reached the maximum amont")
+                customLayout.findViewById<TextView>(R.id.toasttext).text = "Error - Unable to save game deal you have reached the maximum amont"
                 showToast(this,customLayout)
             } else{
                 game.saved = "true"
                 viewModel.saveGameDeal(game)
-                customLayout.findViewById<TextView>(R.id.toasttext).setText("Deal has been Saved")
+                customLayout.findViewById<TextView>(R.id.toasttext).text = "Deal has been Saved"
                 showToast(this,customLayout)
             }
 

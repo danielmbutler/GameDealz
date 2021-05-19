@@ -47,7 +47,7 @@ class MainActivity : BaseActivity(){
                withContext(Dispatchers.Main){
                    val view = findViewById<ViewGroup>(R.id.constraintlayout)
                    val customLayout = layoutInflater.inflate(R.layout.custom_toast,view )
-                   customLayout.findViewById<TextView>(R.id.toasttext).setText("No internet detected, please check connection")
+                   customLayout.findViewById<TextView>(R.id.toasttext).text = "No internet detected, please check connection"
                    showToast(this@MainActivity,customLayout)
                }
 
@@ -77,7 +77,7 @@ class MainActivity : BaseActivity(){
             if(isNetworkAvailablecheck == false){
                 val view = findViewById<ViewGroup>(R.id.constraintlayout)
                 val customLayout = layoutInflater.inflate(R.layout.custom_toast,view )
-                customLayout.findViewById<TextView>(R.id.toasttext).setText("No internet detected, please check connection")
+                customLayout.findViewById<TextView>(R.id.toasttext).text = "No internet detected, please check connection"
                 showToast(this@MainActivity,customLayout)
             }
 
@@ -92,7 +92,7 @@ class MainActivity : BaseActivity(){
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.getItemId()) {
+        return when (item.itemId) {
             id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)

@@ -10,9 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import com.dbtechprojects.gamedeals.R
 
 abstract class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     fun showToast(context: Context, view: View){
         val toast = Toast(context)

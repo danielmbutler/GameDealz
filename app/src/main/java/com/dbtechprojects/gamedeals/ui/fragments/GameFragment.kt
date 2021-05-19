@@ -2,28 +2,25 @@ package com.dbtechprojects.gamedeals.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dbtechprojects.gamedeals.R
 import com.dbtechprojects.gamedeals.data.Resource
 import com.dbtechprojects.gamedeals.databinding.FragmentGameBinding
 import com.dbtechprojects.gamedeals.models.Game
+import com.dbtechprojects.gamedeals.ui.activities.GameDealActivity
 import com.dbtechprojects.gamedeals.ui.viewmodels.MainViewModel
 import com.dbtechprojects.gamedeals.ui.activities.SettingsActivity
 import com.dbtechprojects.gamedeals.ui.adapters.GameListAdapter
 
 import dagger.hilt.android.AndroidEntryPoint
 
-import kotlin.collections.ArrayList
-
 
 @AndroidEntryPoint
-class GameFragment : BaseFragment() {
+class GameFragment : BaseFragment(), GameListAdapter.Interaction {
 
     val viewModel: MainViewModel by viewModels()
     private lateinit var binding: FragmentGameBinding
@@ -37,7 +34,8 @@ class GameFragment : BaseFragment() {
 
         binding = FragmentGameBinding.inflate(inflater, container, false)
         val view = binding.root
-        gameAdapter = GameListAdapter()
+
+        gameAdapter = GameListAdapter(this)
 
         viewModel.getSearchTerm().observe(viewLifecycleOwner, Observer { term ->
             if (term.isNotEmpty()) {
@@ -48,7 +46,7 @@ class GameFragment : BaseFragment() {
                         binding.GameFragmentPlaceholderImage.visibility = View.GONE
                         binding.GameFragmentPlaceholderText.visibility = View.GONE
                         binding.GamesRecyclerView.invalidate()
-                        gameAdapter.setGameList(games)
+                        gameAdapter.submitList(games)
                         viewModel.setgameslist(games)
                         binding.GamesRecyclerView.apply {
                             layoutManager = LinearLayoutManager(activity)
@@ -100,7 +98,7 @@ class GameFragment : BaseFragment() {
                     binding.GameFragmentPlaceholderImage.visibility = View.GONE
                     binding.GameFragmentPlaceholderText.visibility = View.GONE
                     binding.GamesRecyclerView.invalidate()
-                    games.data?.let { gameAdapter.setGameList(it) }
+                    games.data?.let { gameAdapter.submitList(it) }
                     binding.GamesRecyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
                         adapter = gameAdapter
@@ -133,7 +131,7 @@ class GameFragment : BaseFragment() {
             binding.GameFragmentPlaceholderImage.visibility = View.GONE
             binding.GameFragmentPlaceholderText.visibility = View.GONE
             binding.GamesRecyclerView.invalidate()
-            gameAdapter.setGameList(viewModel.getgameslist())
+            gameAdapter.submitList(viewModel.getgameslist())
             binding.GamesRecyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
                 adapter = gameAdapter
@@ -160,6 +158,16 @@ class GameFragment : BaseFragment() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    // RV Item Click
+    override fun onItemSelected(position: Int, item: Game) {
+
+        val intent = Intent(requireContext(), GameDealActivity::class.java)
+        intent.putExtra("gamedeal",item)
+        startActivity(intent)
+
     }
 
 }

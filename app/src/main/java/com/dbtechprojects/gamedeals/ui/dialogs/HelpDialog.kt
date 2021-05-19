@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.dbtechprojects.gamedeals.R
 
-class HelpDialog (): DialogFragment() {
+class HelpDialog : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,10 +24,10 @@ class HelpDialog (): DialogFragment() {
 
          val button = rootview.findViewById<Button>(R.id.Help_Button)
          val helptextView = rootview.findViewById<TextView>(R.id.Help_TextView)
-         helptextView.setMovementMethod(ScrollingMovementMethod());
-         helptextView.setMovementMethod(LinkMovementMethod.getInstance())
+        helptextView.movementMethod = ScrollingMovementMethod()
+        helptextView.movementMethod = LinkMovementMethod.getInstance()
 
-        helptextView.setText(Html.fromHtml("<p><strong>Welcome to IGameDealz</strong></p>\n" +
+        helptextView.text = Html.fromHtml("<p><strong>Welcome to IGameDealz</strong></p>\n" +
                 "<p><br></br></p>\n" +
                 "<p>Please email any queries or questions to <a href=\"mailto:dbtechprojects@gmail.com\">dbtechprojects@gmail.com</a></p>\n" +
                 "<p><br></br></p>\n" +
@@ -42,7 +42,7 @@ class HelpDialog (): DialogFragment() {
                 "<p><br></br></p>\n" +
                 "<p>Saved games and search caches/history are stored on the phone and <strong>will be deleted when uninstalling the app</strong>, this app does not request/store any personal information.\n" +
                 "<p><br><p>Ver 1.1.0 </p></br></p>\n" +
-                "<p><br></br></p>"))
+                "<p><br></br></p>")
 
 
         button.setOnClickListener {

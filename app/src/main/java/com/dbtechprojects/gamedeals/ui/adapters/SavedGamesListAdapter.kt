@@ -1,93 +1,112 @@
 package com.dbtechprojects.gamedeals.ui.adapters
 
-import android.content.Intent
+
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import com.dbtechprojects.gamedeals.R
 import com.dbtechprojects.gamedeals.models.Game
-import com.dbtechprojects.gamedeals.ui.activities.GameDealActivity
 import com.dbtechprojects.gamedeals.util.ImageUtils
 
-class SavedGamesListAdapter : RecyclerView.Adapter<SavedGamesViewHolder>() {
+class SavedGamesListAdapter(private val interaction: Interaction? = null) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var gamelist = mutableListOf<Game>()
+    private var onDeleteListener: SavedGamesListAdapter.OnDeleteListener? = null
 
-    fun setGameList(list: List<Game>) {
-        gamelist = list as MutableList<Game>
-    }
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Game>() {
 
-    fun removeItemAtPosition(pos:Int){
-        gamelist.removeAt(pos)
-    }
-
-    private var onClickListener: OnClickListener? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedGamesViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return SavedGamesViewHolder(inflater, parent)
-
-
-    }
-
-    override fun onBindViewHolder(holder: SavedGamesViewHolder, position: Int) {
-
-
-        val itemView = holder.itemView
-        val TitleText = itemView.findViewById<TextView>(R.id.SavedRow_GameTitle)
-        val MessageText = itemView.findViewById<TextView>(R.id.SavedRow_GameText)
-        val RowImage = itemView.findViewById<ImageView>(R.id.SavedRowGameThumbnail)
-
-        val game: Game = gamelist[position]
-        holder.bind(game)
-        Log.d("ViewHolder", game.toString())
-        Log.d("ViewHolder", game.external!!)
-
-        TitleText?.text = game.external
-        MessageText?.text = "$${game.cheapest}"
-
-        itemView.setOnClickListener {
-            Log.d("test", game.toString())
-            val intent = Intent(itemView.context, GameDealActivity::class.java)
-            intent.putExtra("gamedeal", game)
-            itemView.context.startActivity(intent)
-
+        override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean {
+            return oldItem.gameID == newItem.gameID // something unique that will not change
         }
 
-        val deletebtn = itemView.findViewById<ImageView>(R.id.SavedRow_Game_Delete)
+        override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean {
+            return oldItem == newItem
+        }
 
-        deletebtn.setOnClickListener {
-            if (onClickListener != null) {
-                onClickListener!!.onClick(position, game, holder.itemView)
+    }
+    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return SavedGamesViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.saved_game_item,
+                parent,
+                false
+            ),
+            interaction
+        )
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is SavedGamesViewHolder -> {
+                holder.bind(differ.currentList.get(position), onDeleteListener)
             }
         }
-
-        //glide image
-        val context = RowImage.context
-
-        ImageUtils.loadImage(context, RowImage, game.thumb!!)
     }
 
-
-    override fun getItemCount(): Int = gamelist.size
-
-    fun setOnClickListener(onClickListener: OnClickListener) {
-        this.onClickListener = onClickListener
+    override fun getItemCount(): Int {
+        return differ.currentList.size
     }
 
-    interface OnClickListener {
-        fun onClick(position: Int, model: Game, view: View)
+    fun submitList(list: List<Game>) {
+        differ.submitList(list)
     }
 
+    class SavedGamesViewHolder
+    constructor(
+        itemView: View,
+        private val interaction: Interaction?
+    ) : RecyclerView.ViewHolder(itemView) {
 
+        fun bind(game: Game, onDeleteListener: OnDeleteListener?) = with(itemView) {
+            itemView.setOnClickListener {
+                interaction?.onItemSelected(adapterPosition, game)
+            }
+            val TitleText = itemView.findViewById<TextView>(R.id.SavedRow_GameTitle)
+            val MessageText = itemView.findViewById<TextView>(R.id.SavedRow_GameText)
+            val RowImage = itemView.findViewById<ImageView>(R.id.SavedRowGameThumbnail)
+
+            Log.d("ViewHolder", game.toString())
+            Log.d("ViewHolder", game.external!!)
+
+            TitleText?.text = game.external
+            MessageText?.text = "$${game.cheapest}"
+
+
+            val deletebtn = itemView.findViewById<ImageView>(R.id.SavedRow_Game_Delete)
+
+            deletebtn.setOnClickListener {
+                if (onDeleteListener != null) {
+                    onDeleteListener!!.onDelete(position, game, itemView)
+                }
+            }
+
+            //glide image
+            val context = RowImage.context
+
+            ImageUtils.loadImage(context, RowImage, game.thumb!!)
+        }
+    }
+
+    interface Interaction {
+        fun onItemSelected(position: Int, item: Game)
+    }
+
+    fun setOnDeleteListener(onDeleteListener: OnDeleteListener) {
+        this.onDeleteListener = onDeleteListener
+    }
+
+    interface OnDeleteListener {
+        fun onDelete(position: Int, model: Game, view: View)
+    }
 }
 
-class SavedGamesViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.saved_game_item, parent, false)) {
-
-    fun bind(game: Game) {}
-}

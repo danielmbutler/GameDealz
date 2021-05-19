@@ -1,5 +1,6 @@
 package com.dbtechprojects.gamedeals.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dbtechprojects.gamedeals.R
 import com.dbtechprojects.gamedeals.databinding.FragmentSavedDealsBinding
 import com.dbtechprojects.gamedeals.models.Game
+import com.dbtechprojects.gamedeals.ui.activities.GameDealActivity
 import com.dbtechprojects.gamedeals.ui.viewmodels.SavedDealViewModel
 import com.dbtechprojects.gamedeals.ui.adapters.SavedGamesListAdapter
 import com.dbtechprojects.gamedeals.util.TAG
@@ -19,12 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SavedDealsFragment : BaseFragment() {
+class SavedDealsFragment : BaseFragment(), SavedGamesListAdapter.Interaction {
 
 
     private val viewModel: SavedDealViewModel by viewModels()
     private lateinit var binding: FragmentSavedDealsBinding
-    lateinit var savedDealsAdapter: SavedGamesListAdapter // not private due to testing
+    lateinit var savedDealsListAdapter: SavedGamesListAdapter // not private due to testing
 
 
 
@@ -36,9 +38,10 @@ class SavedDealsFragment : BaseFragment() {
         binding = FragmentSavedDealsBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        savedDealsAdapter = SavedGamesListAdapter()
-        savedDealsAdapter.setOnClickListener(onClickListener = object : SavedGamesListAdapter.OnClickListener{
-            override fun onClick(position: Int, model: Game, view: View) {
+        savedDealsListAdapter = SavedGamesListAdapter(this)
+        savedDealsListAdapter.setOnDeleteListener(object : SavedGamesListAdapter.OnDeleteListener{
+
+            override fun onDelete(position: Int, model: Game, view: View) {
                 deleteGame(game = model, pos = position)
             }
 
@@ -52,19 +55,19 @@ class SavedDealsFragment : BaseFragment() {
                 binding.SavedGamesPlaceHolderImage.visibility = View.GONE
                 binding.textView.visibility = View.GONE
                 viewModel.setGamesList(games)
-                savedDealsAdapter.setGameList(games)
+                savedDealsListAdapter.submitList(games)
 
             } else {
                 binding.SavedGamesPlaceHolderImage.visibility = View.VISIBLE
                 binding.textView.visibility = View.VISIBLE
                 val emptyList =  mutableListOf<Game>()
-                savedDealsAdapter.setGameList(emptyList)
+                savedDealsListAdapter.submitList(emptyList)
             }
 
 
             binding.SavedGamesRecyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = savedDealsAdapter
+                adapter = savedDealsListAdapter
             }
 
         })
@@ -78,7 +81,7 @@ class SavedDealsFragment : BaseFragment() {
         // clear adapter if no games in viewModel
         if (viewModel.getGameList().isEmpty()){
             val emptyList =  mutableListOf<Game>()
-            savedDealsAdapter.setGameList(emptyList)
+            savedDealsListAdapter.submitList(emptyList)
         }
 
     }
@@ -92,7 +95,7 @@ class SavedDealsFragment : BaseFragment() {
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
                 game.saved = null
-                savedDealsAdapter.removeItemAtPosition(pos)
+                savedDealsListAdapter.notifyItemRemoved(pos)
                 viewModel.removeSavedDeal(game)
 
             }
@@ -106,6 +109,13 @@ class SavedDealsFragment : BaseFragment() {
 
     }
 
+    // RV Item Click
+    override fun onItemSelected(position: Int, game: Game) {
+
+        val intent = Intent(requireContext(), GameDealActivity::class.java)
+        intent.putExtra("gamedeal", game)
+        startActivity(intent)
+    }
 
 
 }
